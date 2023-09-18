@@ -51,7 +51,7 @@ pipeline {
                 script {
                     // Define Helm command to upgrade or install the chart
 
-                    sh "kubectl --kubeconfig=/root/.kube/config apply -f deployment.yaml"
+                    sh "kubectl --kubeconfig=/var/lib/jenkins/root/.kube/config apply -f deployment.yaml"
                     
                     
                 }
