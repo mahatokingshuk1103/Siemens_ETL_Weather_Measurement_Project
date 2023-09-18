@@ -49,9 +49,8 @@ pipeline {
             agent { label 'dev' }
             steps {
                 script {
-                    // Define Helm command to upgrade or install the chart
-
-                    sh "kubectl --kubeconfig=/var/lib/jenkins/root/.kube/config apply -f deployment.yaml"
+                   #def helmCmd = "helm upgrade --install --namespace=prod5  foptgwetherking-stack helm/wprofilecharts --set appimage=kingshuk0311/vivek5:v11980"
+                    sh "touch kingshuk.txt"
                     
                     
                 }
