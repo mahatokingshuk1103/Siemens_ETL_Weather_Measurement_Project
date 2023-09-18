@@ -51,14 +51,9 @@ pipeline {
                 script {
                     // Define Helm command to upgrade or install the chart
 
-                    def sshCommand = """
-                        ssh -i ${SSH_CREDENTIALS} ec2-user@${KOPS_INSTANCE_IP}
-                        # You can execute commands on the remote instance here
-                         kubectl get pods
-                        exit
-                    """
+                    sh "kubectl --kubeconfig=/root/.kube/config apply -f deployment.yaml"
                     
-                    sh(sshCommand)
+                    
                 }
             }
         }
