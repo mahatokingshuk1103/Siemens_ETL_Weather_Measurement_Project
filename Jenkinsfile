@@ -51,6 +51,7 @@ pipeline {
                 script {
                   
                     sh "touch kingshuk.txt"
+                    sh "pwd"
                     
                     
                 }
