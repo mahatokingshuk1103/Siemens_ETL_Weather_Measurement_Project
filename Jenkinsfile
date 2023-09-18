@@ -50,7 +50,7 @@ pipeline {
             steps {
                 script {
                   
-                    sh "helm upgrade --install --force wetherking-stack helm/wprofilecharts --set appimage=kingshuk0311/vivek5:v12 --namespace prod5"
+                    sh "helm upgrade --install --force wetherking100-stack helm/wprofilecharts --set appimage=kingshuk0311/vivek5:v12 --namespace prod5"
                     
                     
                 }
