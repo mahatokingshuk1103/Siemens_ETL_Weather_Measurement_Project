@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         imageName = "kingshuk0311/vivek5"
-        imageTag = "v:{env.BUILD_ID}"
+        imageTag = "v{env.BUILD_ID}"
         dockerfile = "./Dockerfile"
     }
 
