@@ -50,8 +50,7 @@ pipeline {
             steps {
                 script {
                   
-                    sh "touch kingshuk.txt"
-                    sh "pwd"
+                    sh "helm upgrade --install --force wetherking-stack helm/wprofilecharts --set appimage=kingshuk0311/vivek5:v12 --namespace prod5"
                     
                     
                 }
