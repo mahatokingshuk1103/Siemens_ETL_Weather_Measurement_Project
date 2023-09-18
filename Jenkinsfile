@@ -1,10 +1,10 @@
 pipeline {
     agent any
 
-    environment {
-        imageName = "kingshuk0311/vivek5"
-        imageTag = "v{env.BUILD_ID}"
-        dockerfile = "./Dockerfile"
+imageName = "kingshuk0311/vivek5"
+imageTag = "v${env.BUILD_ID}"
+dockerfile = "./Dockerfile"
+
     }
 
     stages {
