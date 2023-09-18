@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         imageName = "kingshuk0311/vivek5"
-        imageTag = "v11980"
+        imageTag = "v:{env.BUILD_ID}"
         dockerfile = "./Dockerfile"
     }
 
@@ -19,10 +19,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    def imageName = "kingshuk0311/vivek5"
-                    def imageTag = "v11980"
-
-                    sh "sudo -S docker build -t ${imageName}:${imageTag} ."
+                   sh "sudo -S docker build -t ${imageName}:${imageTag} ."
                     echo "${imageName}:${imageTag}"
                 }
             }
@@ -36,13 +33,6 @@ pipeline {
                     }
                     sh "sudo docker push ${imageName}:${imageTag}"
                 }
-            }
-        }
-
-        stage('Docker Pull') {
-            steps {
-                sh 'sudo docker pull kingshuk0311/vivek5:v11980'
-                echo "Pulled successfully"
             }
         }
 
