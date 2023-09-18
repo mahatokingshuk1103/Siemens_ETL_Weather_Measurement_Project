@@ -1,11 +1,10 @@
 pipeline {
     agent any
 
-imageName = "kingshuk0311/vivek5"
-imageTag = "v${env.BUILD_ID}"
-dockerfile = "./Dockerfile"
-
-    }
+    // Define variables for Docker image and tag
+    def imageName = "kingshuk0311/vivek5"
+    def imageTag = "v${env.BUILD_ID}"
+    def dockerfile = "./Dockerfile"
 
     stages {
         stage('Checkout') {
@@ -19,18 +18,22 @@ dockerfile = "./Dockerfile"
         stage('Build Docker Image') {
             steps {
                 script {
-                   sh "sudo -S docker build -t ${imageName}:${imageTag} ."
+                    // Build the Docker image using the defined variables
+                    sh "sudo -S docker build -t ${imageName}:${imageTag} -f ${dockerfile} ."
                     echo "${imageName}:${imageTag}"
                 }
             }
         }
 
-        stage('Push Image Dockerhub') {
+        stage('Push Image to Docker Hub') {
             steps {
                 script {
+                    // Log in to Docker Hub using credentials
                     withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhubpwd')]) {
                         sh "sudo docker login -u kingshuk0311 -p \${dockerhubpwd}"
                     }
+
+                    // Push the Docker image to Docker Hub
                     sh "sudo docker push ${imageName}:${imageTag}"
                 }
             }
@@ -40,13 +43,13 @@ dockerfile = "./Dockerfile"
             agent { label 'dev' }
             steps {
                 script {
-                  def helmCmd = "helm upgrade --install --namespace=test3  foptgwetherking-stack helm/wprofilecharts --set appimage=kingshuk0311/vivek5:v11980"
-                  
-
-                  sh(helmCmd)
-
+                    // Define Helm command to upgrade or install the chart
+                    def helmCmd = "helm upgrade --install --namespace=test3 foptgwetherking-stack helm/wprofilecharts --set appimage=${imageName}:${imageTag}"
+                    
+                    // Execute the Helm command
+                    sh(helmCmd)
                 }
             }
         }
     }
-
+}
