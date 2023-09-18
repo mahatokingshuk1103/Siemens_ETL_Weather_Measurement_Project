@@ -6,6 +6,9 @@ pipeline {
         imageName = "kingshuk0311/siemens"
         imageTag = "v${env.BUILD_ID}"
         dockerfile = "./Dockerfile"
+        SSH_CREDENTIALS = credentials('kopssiemensid')  // Replace with your SSH credential ID
+        KOPS_CLUSTER_NAME = 'kingshuk.shop'
+        KOPS_INSTANCE_IP = 'ip-172.31.32.55' 
     }
 
     
@@ -47,10 +50,15 @@ pipeline {
             steps {
                 script {
                     // Define Helm command to upgrade or install the chart
-                    def helmCmd = "helm upgrade --install --namespace=test3 foptgwetherking-stack helm/wprofilecharts --set appimage=${imageName}:${imageTag}"
+
+                    def sshCommand = """
+                        ssh -i ${SSH_CREDENTIALS} ec2-user@${KOPS_INSTANCE_IP}
+                        # You can execute commands on the remote instance here
+                         kubectl get pods
+                        exit
+                    """
                     
-                    // Execute the Helm command
-                    sh(helmCmd)
+                    sh(sshCommand)
                 }
             }
         }
