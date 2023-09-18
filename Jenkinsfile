@@ -49,7 +49,7 @@ pipeline {
             agent { label 'dev' }
             steps {
                 script {
-                   #def helmCmd = "helm upgrade --install --namespace=prod5  foptgwetherking-stack helm/wprofilecharts --set appimage=kingshuk0311/vivek5:v11980"
+                  
                     sh "touch kingshuk.txt"
                     
                     
