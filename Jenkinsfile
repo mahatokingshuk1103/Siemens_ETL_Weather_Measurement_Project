@@ -2,10 +2,13 @@ pipeline {
     agent any
 
     // Define variables for Docker image and tag
-    def imageName = "kingshuk0311/vivek5"
-    def imageTag = "v${env.BUILD_ID}"
-    def dockerfile = "./Dockerfile"
+    environment {
+        imageName = "kingshuk0311/siemens"
+        imageTag = "v${env.BUILD_ID}"
+        dockerfile = "./Dockerfile"
+    }
 
+    
     stages {
         stage('Checkout') {
             steps {
