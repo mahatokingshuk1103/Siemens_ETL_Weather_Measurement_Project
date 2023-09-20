@@ -27,8 +27,7 @@ options {
         stage('Build Docker Image') {
             steps {
                 script {
-                  sh "sudo -S docker build -t ${imageName}:${imageTag} -f ${dockerfile} ."
-                  echo "${imageName}:${imageTag}"
+                  app = docker.build("weather")
                 }
             }
         }
