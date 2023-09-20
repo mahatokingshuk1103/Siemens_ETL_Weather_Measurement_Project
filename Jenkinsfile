@@ -1,14 +1,8 @@
 pipeline {
     agent any
-
-    // Define variables for Docker image and tag
-    environment {
-        imageName = "kingshuk0311/siemens"
-        imageTag = "v${env.BUILD_ID}"
-        dockerfile = "./Dockerfile"
-        SSH_CREDENTIALS = credentials('kopssiemensid')  // Replace with your SSH credential ID
-        KOPS_CLUSTER_NAME = 'kingshuk.shop'
-        KOPS_INSTANCE_IP = 'ip-172.31.32.55' 
+}
+options {
+        skipStagesAfterUnstable()
     }
 
     
@@ -24,37 +18,21 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build the Docker image using the defined variables
-                    sh "sudo -S docker build -t ${imageName}:${imageTag} -f ${dockerfile} ."
-                    echo "${imageName}:${imageTag}"
+                   app = docker.build("weather")
                 }
             }
         }
 
-        stage('Push Image to Docker Hub') {
+        stage('Push Image to ECR') {
             steps {
                 script {
-                    // Log in to Docker Hub using credentials
-                    withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhubpwd')]) {
-                        sh "sudo docker login -u kingshuk0311 -p \${dockerhubpwd}"
-                    }
-
-                    // Push the Docker image to Docker Hub
-                    sh "sudo docker push ${imageName}:${imageTag}"
+                   docker.withRegistry('https://us-east-2.console.aws.amazon.com/ecr/repositories/public/722525113337/weather?region=us-east-2', 'ecr:us-east-2:AWS Credentials id') {
+                    app.push("${env.BUILD_NUMBER}")
+		            app.push("latest")
                 }
             }
         }
 
-        stage('Deploy to Kubernetes') {
-            agent { label 'dev' }
-            steps {
-                script {
-                  
-                    sh "helm upgrade --install --force wetherking100-stack helm/wprofilecharts --set appimage=kingshuk0311/vivek5:v12 --namespace prod5"
-                    
-                    
-                }
-            }
-        }
+       
     }
 }
