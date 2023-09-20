@@ -6,9 +6,7 @@ environment {
         imageName = "kingshuk0311/siemens"
         imageTag = "v${env.BUILD_ID}"
         dockerfile = "./Dockerfile"
-        SSH_CREDENTIALS = credentials('kopssiemensid')  // Replace with your SSH credential ID
-        KOPS_CLUSTER_NAME = 'kingshuk.shop'
-        KOPS_INSTANCE_IP = 'ip-172.31.32.55' 
+        
     }
 
 
