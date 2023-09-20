@@ -19,7 +19,7 @@ options {
         stage('Build Docker Image') {
             steps {
                 script {
-                   app = docker.build("weather")
+                   app = sudo docker.build("weather")
                 }
             }
         }
