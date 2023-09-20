@@ -27,8 +27,8 @@ options {
             steps {
                 script {
                    docker.withRegistry('https://us-east-2.console.aws.amazon.com/ecr/repositories/public/722525113337/weather?region=us-east-2', 'ecr:us-east-2:AWS Credentials id') {
-                    app.push("${env.BUILD_NUMBER}")
-		            app.push("latest")
+                   app.push("${env.BUILD_NUMBER}")
+		   app.push("latest")
                 }
             }
         }
