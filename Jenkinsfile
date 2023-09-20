@@ -27,7 +27,7 @@ options {
         stage('Build Docker Image') {
             steps {
                 script {
-                  app = docker.build("weather")
+                  app = docker.build("weather:v1")
                 }
             }
         }
